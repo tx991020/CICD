@@ -1,0 +1,10 @@
+FROM golang:1.12-alpine
+
+ENV HTCI_IMAGE_TYPE=golang
+
+RUN set -x \
+	&& sed -i 's@http://dl-cdn.alpinelinux.org/alpine@https://mirrors.ustc.edu.cn/alpine@g' /etc/apk/repositories \
+	&& apk add --no-cache git bash make \
+	&& go get -u github.com/golang/dep/cmd/dep \
+	&& apk add --no-cache --virtual .build-dep musl-dev gcc \
+	&& apk del .build-dep

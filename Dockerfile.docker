@@ -1,0 +1,10 @@
+FROM library/docker:17.12.1-ce
+
+ENV HTCI_IMAGE_TYPE=docker
+
+RUN set -x \
+ && sed -i 's@http://dl-cdn.alpinelinux.org/alpine@https://mirrors.ustc.edu.cn/alpine@g' /etc/apk/repositories \
+ && apk add --no-cache curl python2 git bash
+
+ADD ./entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
